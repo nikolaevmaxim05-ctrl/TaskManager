@@ -1,0 +1,113 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\AddFriends.html",
+      "PackagePath": "staticwebassets\\AddFriends.html"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\ChatPage.html",
+      "PackagePath": "staticwebassets\\ChatPage.html"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\Friends.html",
+      "PackagePath": "staticwebassets\\Friends.html"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\LogInPage.html",
+      "PackagePath": "staticwebassets\\LogInPage.html"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\Profile.html",
+      "PackagePath": "staticwebassets\\Profile.html"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\ProfileEditPage.html",
+      "PackagePath": "staticwebassets\\ProfileEditPage.html"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\SighInPage.html",
+      "PackagePath": "staticwebassets\\SighInPage.html"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\TaskCreatePage.html",
+      "PackagePath": "staticwebassets\\TaskCreatePage.html"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\TaskEditPage.html",
+      "PackagePath": "staticwebassets\\TaskEditPage.html"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\TaskPage.html",
+      "PackagePath": "staticwebassets\\TaskPage.html"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\WorkPage.html",
+      "PackagePath": "staticwebassets\\WorkPage.html"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\ava\\07091204-ef8a-49ac-80a6-33b43672cb22.PNG",
+      "PackagePath": "staticwebassets\\photo\\ava\\07091204-ef8a-49ac-80a6-33b43672cb22.PNG"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\ava\\07b64ece-848c-4674-ac64-6825a73513f9.jpg",
+      "PackagePath": "staticwebassets\\photo\\ava\\07b64ece-848c-4674-ac64-6825a73513f9.jpg"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\ava\\45ffdab5-5fd7-43a2-92dc-d5e664dc1311.jpg",
+      "PackagePath": "staticwebassets\\photo\\ava\\45ffdab5-5fd7-43a2-92dc-d5e664dc1311.jpg"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\ava\\548b4b98-7df4-4152-ae67-6b3dd1ae29e0.PNG",
+      "PackagePath": "staticwebassets\\photo\\ava\\548b4b98-7df4-4152-ae67-6b3dd1ae29e0.PNG"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\ava\\806282ce-12ba-4f32-a31e-cb36b9e09ea8.JPG",
+      "PackagePath": "staticwebassets\\photo\\ava\\806282ce-12ba-4f32-a31e-cb36b9e09ea8.JPG"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\ava\\ccba4e63-2a3b-4803-a82d-96d7bc63a4b5.jpg",
+      "PackagePath": "staticwebassets\\photo\\ava\\ccba4e63-2a3b-4803-a82d-96d7bc63a4b5.jpg"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\ava\\d78a8482-1bda-40bc-ac2b-49342879d21b.PNG",
+      "PackagePath": "staticwebassets\\photo\\ava\\d78a8482-1bda-40bc-ac2b-49342879d21b.PNG"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\ava\\default-avatar.jpg",
+      "PackagePath": "staticwebassets\\photo\\ava\\default-avatar.jpg"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\notes\\0f86c365-ca89-4839-96b7-876278a9d43b\\4653ed2e-3559-45d4-839d-6072c4104c75.jpg",
+      "PackagePath": "staticwebassets\\photo\\notes\\0f86c365-ca89-4839-96b7-876278a9d43b\\4653ed2e-3559-45d4-839d-6072c4104c75.jpg"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\notes\\0f86c365-ca89-4839-96b7-876278a9d43b\\56306cea-c187-485b-b2f1-f292c299d361.JPG",
+      "PackagePath": "staticwebassets\\photo\\notes\\0f86c365-ca89-4839-96b7-876278a9d43b\\56306cea-c187-485b-b2f1-f292c299d361.JPG"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\notes\\6e6c88b9-b273-434b-a5a4-b1fe32792412\\3f50fe34-da6c-44de-87bd-3e1f523ea531.jpg",
+      "PackagePath": "staticwebassets\\photo\\notes\\6e6c88b9-b273-434b-a5a4-b1fe32792412\\3f50fe34-da6c-44de-87bd-3e1f523ea531.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.TaskManager.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.TaskManager.props",
+      "PackagePath": "build\\TaskManager.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.TaskManager.props",
+      "PackagePath": "buildMultiTargeting\\TaskManager.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.TaskManager.props",
+      "PackagePath": "buildTransitive\\TaskManager.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

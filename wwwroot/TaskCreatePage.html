@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Создать задачу</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-size: 28px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .deadline-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .deadline-group input {
+            flex: 1;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+        }
+
+        .btn-submit {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #218838;
+        }
+
+        .btn-cancel {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background: #5a6268;
+        }
+
+        .image-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .upload-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #d3d3d3;
+            color: #555;
+            font-size: 28px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .upload-label:hover {
+            background: #b0b0b0;
+            transform: scale(1.1);
+        }
+
+        .image-preview {
+            position: relative;
+            display: inline-block;
+        }
+
+        .image-preview img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 0 4px rgba(0,0,0,0.2);
+        }
+
+        .remove-image {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            line-height: 18px;
+        }
+
+        .remove-image:hover {
+            background: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Создать задачу</h2>
+
+    <form id="noteForm" method="post" action="/api/tasks/create" enctype="multipart/form-data">
+        <input type="hidden" id="csrfToken" value="">
+
+        <label for="HeadOfNote">Заголовок</label>
+        <input type="text" id="HeadOfNote" name="HeadOfNote" placeholder="Введите название задачи" required>
+
+        <label for="BodyOfNote">Описание</label>
+        <textarea id="BodyOfNote" name="BodyOfNote" placeholder="Опишите, что нужно сделать..." required></textarea>
+
+        <div class="image-section" id="imageSection">
+            <label for="imageUpload" class="upload-label" title="Добавить фото">+</label>
+            <input type="file" id="imageUpload" name="Images" accept="image/*" multiple style="display:none;">
+        </div>
+
+        <label for="deadline-date">Дедлайн</label>
+        <div class="deadline-group">
+            <input type="date" id="deadline-date" required>
+            <input type="time" id="deadline-time" required>
+        </div>
+
+        <button type="submit" class="btn btn-submit">Создать задачу</button>
+        <button type="button" class="btn btn-cancel" onclick="window.location.href='/work'">Отмена</button>
+    </form>
+</div>
+
+<script>
+    async function loadCsrfToken() {
+        try {
+            const res = await fetch("/csrf-token", { credentials: "include" });
+            if (res.ok) {
+                const data = await res.json();
+                document.getElementById("csrfToken").value = data.token;
+            }
+        } catch (e) {
+            console.warn("Не удалось получить CSRF токен", e);
+        }
+    }
+    loadCsrfToken();
+
+    const uploadInput = document.getElementById("imageUpload");
+    const imageSection = document.getElementById("imageSection");
+    let selectedImages = [];
+
+    uploadInput.addEventListener("change", function () {
+        for (const file of this.files) {
+            selectedImages.push(file);
+
+            const preview = document.createElement("div");
+            preview.classList.add("image-preview");
+
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(file);
+
+            const removeBtn = document.createElement("button");
+            removeBtn.textContent = "✖";
+            removeBtn.classList.add("remove-image");
+            removeBtn.addEventListener("click", () => {
+                preview.remove();
+                selectedImages = selectedImages.filter(f => f !== file);
+            });
+
+            preview.appendChild(img);
+            preview.appendChild(removeBtn);
+            imageSection.insertBefore(preview, imageSection.firstChild);
+        }
+
+        this.value = "";
+    });
+
+    document.getElementById("noteForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const date = document.getElementById("deadline-date").value;
+        const time = document.getElementById("deadline-time").value;
+        const HeadOfNote = document.getElementById("HeadOfNote").value.trim();
+        const BodyOfNote = document.getElementById("BodyOfNote").value.trim();
+        const csrfToken = document.getElementById("csrfToken").value;
+
+        if (!date || !time) {
+            alert("Пожалуйста, выберите дату и время дедлайна");
+            return;
+        }
+
+        const DateOfDeadLine = `${date}T${time}`;
+        const formData = new FormData();
+        formData.append("HeadOfNote", HeadOfNote);
+        formData.append("BodyOfNote", BodyOfNote);
+        formData.append("DateOfDeadLine", DateOfDeadLine);
+        if (selectedImages) {
+            selectedImages.forEach((p, i) => formData.append(`Images[${i}]`, p));
+        }
+
+        try {
+            const response = await fetch("/api/tasks/create", {
+                method: "POST",
+                headers: csrfToken ? { "X-CSRF-TOKEN": csrfToken } : {},
+                body: formData,
+                credentials: "include"
+            });
+
+            if (response.ok) {
+                alert("✅ Задача успешно создана!");
+                window.location.href = "/work";
+            } else {
+                const errorText = await response.text();
+                alert("⚠️ Ошибка: " + errorText);
+            }
+        } catch (error) {
+            console.error("Ошибка при отправке запроса:", error);
+            alert("❌ Не удалось отправить задачу. Проверьте соединение.");
+        }
+    });
+</script>
+
+</body>
+</html>

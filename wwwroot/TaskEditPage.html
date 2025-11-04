@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Редактирование задачи</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #343a40;
+            color: white;
+            padding: 15px 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .image-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .image-item {
+            position: relative;
+            display: inline-block;
+        }
+        .navbar .title { font-size: 22px; font-weight: bold; cursor: pointer; }
+        .navbar .right { display: flex; align-items: center; gap: 12px; }
+        .navbar button {
+            background-color: #3498db;
+            border: none;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+        .navbar button:hover { background-color: #2980b9; transform: scale(1.05); }
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #5dade2;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            overflow: hidden;
+            border: 2px solid #fff;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+        }
+
+        .container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
+        .form-box {
+            background: white; padding: 40px 50px; border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            max-width: 480px; width: 100%; text-align: center;
+        }
+        h2 { margin-bottom: 25px; color: #2c3e50; font-size: 26px; }
+        label { display: block; text-align: left; margin-bottom: 8px; font-weight: 600; color: #444; }
+        input, textarea {
+            width: 100%; padding: 12px; margin-bottom: 18px;
+            border: 1px solid #ccc; border-radius: 10px;
+            font-size: 15px; transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+        input:focus, textarea:focus { border-color: #007bff; box-shadow: 0 0 4px rgba(0, 123, 255, 0.3); outline: none; }
+        textarea { resize: vertical; min-height: 100px; }
+        .deadline-group { display: flex; gap: 10px; }
+        .deadline-group input { flex: 1; }
+        .upload-label {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: #ccc; color: white; font-size: 24px;
+            cursor: pointer; margin-bottom: 15px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .upload-label:hover { background: #999; transform: scale(1.1); }
+        .image-preview { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+        .image-item { position: relative; display: inline-block; }
+        .image-item img {
+            width: 100px; height: 100px; object-fit: cover;
+            border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        .delete-image {
+            position: absolute; top: -8px; right: -8px;
+            background: rgba(0, 0, 0, 0.6); color: white; border: none;
+            border-radius: 50%; width: 22px; height: 22px;
+            cursor: pointer; font-size: 14px;
+        }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; margin-top: 10px; transition: transform 0.2s ease, background 0.3s ease; }
+        .btn:hover { transform: scale(1.02); }
+        .btn-submit { background: #28a745; color: white; }
+        .btn-submit:hover { background: #218838; }
+        .btn-cancel { background: #6c757d; color: white; }
+        .btn-cancel:hover { background: #5a6268; }
+        .success-msg { margin-top: 15px; color: #28a745; font-weight: bold; }
+        .error-msg { margin-top: 15px; color: #c0392b; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="title" onclick="window.location.href='/'">Task Manager</div>
+    <div class="right">
+        <button onclick="window.location.href='/TaskCreatePage.html'">Добавить задачу</button>
+        <div class="profile-icon" id="profileIcon">👤</div>
+        <button onclick="logout()">Выйти</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="form-box">
+        <h2>Редактирование задачи</h2>
+        <form id="editNoteForm" enctype="multipart/form-data">
+            <input type="hidden" id="csrfToken" name="__RequestVerificationToken" />
+            <label for="title">Заголовок</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="body">Описание</label>
+            <textarea id="body" name="body" required></textarea>
+
+            <label class="upload-label" for="imageUpload">+</label>
+            <input type="file" id="imageUpload" name="Images" accept="image/*" multiple style="display:none;">
+            <div id="imagePreview" class="image-preview"></div>
+
+            <label for="deadline-date">Дедлайн</label>
+            <div class="deadline-group">
+                <input type="date" id="deadline-date" name="deadline-date" required>
+                <input type="time" id="deadline-time" name="deadline-time" required>
+            </div>
+
+            <button type="submit" class="btn btn-submit">💾 Сохранить изменения</button>
+            <button type="button" class="btn btn-cancel" onclick="window.location.href='/work'">Отмена</button>
+        </form>
+
+        <div id="message"></div>
+    </div>
+</div>
+
+<script>
+    async function getCurrentUserId() {
+        try {
+            const res = await fetch("/api/user/me"); // или твой актуальный эндпоинт
+            if (!res.ok) return null;
+            const id = await res.json();
+            return id;
+        } catch {
+            return null;
+        }
+    }
+
+    async function initProfileButton() {
+        const profileIcon = document.getElementById("profileIcon");
+
+        try {
+            const res = await fetch("/api/user/me");
+            if (!res.ok) throw new Error("Не удалось получить id пользователя");
+            const userId = await res.json();
+
+            // Получаем данные пользователя (аватар)
+            const userRes = await fetch(`/api/user/profile/${userId}`);
+            if (!userRes.ok) throw new Error("Ошибка загрузки профиля");
+            const user = await userRes.json();
+
+            const avatar = user.avatarPath || "/photo/ava/default-avatar.jpg";
+
+            // Заменяем иконку 👤 на реальную аватарку
+            profileIcon.style.backgroundColor = "transparent";
+            profileIcon.style.backgroundImage = `url('${avatar}')`;
+            profileIcon.style.backgroundSize = "cover";
+            profileIcon.style.backgroundPosition = "center";
+            profileIcon.style.border = "2px solid #fff";
+            profileIcon.textContent = ""; // убираем символ 👤
+            profileIcon.onclick = () => window.location.href = `/profile/${userId}`;
+        } catch (err) {
+            console.error(err);
+            profileIcon.onclick = () => alert("Ошибка: не удалось загрузить аватар пользователя");
+        }
+    }
+
+
+    initProfileButton();
+    const noteId = window.location.pathname.split("/").pop();
+    let currentFiles = [];         // новые файлы (File объекты)
+    let existingImages = [];       // старые изображения (пути)
+    let deletedOldImages = [];     // какие старые удалили
+
+    async function loadCsrfToken() {
+        try {
+            const res = await fetch("/csrf-token", { credentials: "include" });
+            if (res.ok) {
+                const data = await res.json();
+                document.getElementById("csrfToken").value = data.token;
+            }
+        } catch (e) {
+            console.warn("Не удалось получить CSRF токен", e);
+        }
+    }
+
+    async function loadTask() {
+        const res = await fetch(`/api/tasks/${noteId}`);
+        if (res.ok) {
+            const note = await res.json();
+            document.getElementById("title").value = note.headOfNote;
+            document.getElementById("body").value = note.bodyOfNote;
+
+            const deadline = new Date(note.dateOfDeadLine);
+            document.getElementById("deadline-date").value = deadline.toISOString().split("T")[0];
+            document.getElementById("deadline-time").value = deadline.toTimeString().substring(0, 5);
+
+            if (note.images && note.images.length) {
+                existingImages = note.images.map(src =>
+                    src.startsWith("/") ? src : "/" + src.replace(/^.*wwwroot[\\/]/, "")
+                );
+            }
+
+            renderAllPhotos();
+        }
+    }
+
+    // когда пользователь выбирает новые файлы
+    document.getElementById("imageUpload").addEventListener("change", e => {
+        const files = Array.from(e.target.files);
+        currentFiles.push(...files);
+        renderAllPhotos();
+    });
+
+    // отрисовываем все фото (старые + новые)
+    function renderAllPhotos() {
+        const preview = document.getElementById("imagePreview");
+        preview.innerHTML = "";
+
+        // старые изображения
+        existingImages.forEach(path => {
+            const div = document.createElement("div");
+            div.className = "image-item";
+            div.innerHTML = `
+                <img src="${path}" alt="old">
+                <button class="delete-image" data-old="${path}">🗑</button>
+            `;
+            preview.appendChild(div);
+        });
+
+        // новые файлы
+        currentFiles.forEach((file, index) => {
+            const url = URL.createObjectURL(file);
+            const div = document.createElement("div");
+            div.className = "image-item";
+            div.innerHTML = `
+                <img src="${url}" alt="new">
+                <button class="delete-image" data-index="${index}">🗑</button>
+            `;
+            preview.appendChild(div);
+        });
+    }
+
+    // обработчик удаления
+    document.getElementById("imagePreview").addEventListener("click", e => {
+        if (e.target.classList.contains("delete-image")) {
+            // если удаляем новое
+            if (e.target.dataset.index !== undefined) {
+                currentFiles.splice(e.target.dataset.index, 1);
+            }
+            // если удаляем старое
+            else if (e.target.dataset.old) {
+                const path = e.target.dataset.old;
+                deletedOldImages.push(path);
+                existingImages = existingImages.filter(p => p !== path);
+            }
+            renderAllPhotos();
+        }
+    });
+
+    // отправка формы
+    // отправка формы
+    document.getElementById("editNoteForm").addEventListener("submit", async e => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append("HeadOfNote", document.getElementById("title").value);
+        formData.append("BodyOfNote", document.getElementById("body").value);
+
+        const date = document.getElementById("deadline-date").value;
+        const time = document.getElementById("deadline-time").value;
+        const deadline = new Date(`${date}T${time}:00`);
+        formData.append("DateOfDeadLine", deadline.toISOString());
+
+        // 🔹 Сохраняем старые, оставшиеся картинки
+        existingImages.forEach((path, i) => formData.append(`ExistingImages[${i}]`, path));
+
+        // 🔹 Добавляем новые файлы
+        currentFiles.forEach((file, i) => formData.append(`Images[${i}]`, file));
+
+        // 🔹 Удалённые (если хочешь, можно обработать на сервере)
+        deletedOldImages.forEach((path, i) => formData.append(`DeletedImages[${i}]`, path));
+
+        const csrfToken = document.getElementById("csrfToken").value;
+        const res = await fetch(`/api/tasks/${noteId}`, {
+            method: "PUT",
+            headers: { "X-CSRF-TOKEN": csrfToken },
+            body: formData,
+            credentials: "include"
+        });
+
+        const msg = document.getElementById("message");
+        if (res.ok) {
+            msg.className = "success-msg";
+            msg.textContent = "✅ Изменения сохранены!";
+            setTimeout(() => window.location.href = `/tasks/${noteId}`, 1000);
+        } else {
+            msg.className = "error-msg";
+            msg.textContent = "❌ Ошибка при сохранении.";
+        }
+    });
+
+
+    async function logout() {
+        await fetch("/logout", { credentials: "include" });
+        window.location.href = "/";
+    }
+
+    (async () => {
+        await loadCsrfToken();
+        await loadTask();
+    })();
+</script>
+
+</body>
+</html>

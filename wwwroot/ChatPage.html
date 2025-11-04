@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Чат</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #343a40;
+            color: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .title {
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .navbar button {
+            background-color: #3498db;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 15px;
+        }
+
+        .navbar button:hover {
+            background-color: #2980b9;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #5dade2;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            border: 2px solid #fff;
+            transition: transform 0.2s;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.05);
+        }
+
+        .chat-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .chat-container {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 12px;
+            word-wrap: break-word;
+            line-height: 1.4;
+            position: relative;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .message.sent {
+            background-color: #d1f7d6;
+            align-self: flex-end;
+        }
+
+        .message.received {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+        }
+
+        .message small {
+            display: block;
+            font-size: 12px;
+            color: #777;
+            margin-top: 4px;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        .chat-input button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .chat-input button:hover {
+            background-color: #219150;
+        }
+
+        .message-actions {
+            position: absolute;
+            top: -18px;
+            right: 6px;
+            display: flex;
+            gap: 6px;
+            font-size: 14px;
+        }
+
+        .message-actions span {
+            cursor: pointer;
+            color: #888;
+            transition: 0.2s;
+        }
+
+        .message-actions span:hover {
+            color: #000;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div class="title" onclick="window.location.href='/'">Task Manager</div>
+    <div style="display:flex; align-items:center; gap:10px;">
+        <div class="profile-icon" id="profileIcon">👤</div>
+        <button onclick="logout()">Выйти</button>
+    </div>
+</div>
+
+<div class="chat-wrapper">
+    <div class="chat-container">
+        <div class="chat-messages" id="chatMessages"></div>
+        <form class="chat-input" id="messageForm">
+            <input type="text" id="messageInput" placeholder="Введите сообщение..." required />
+            <input type="hidden" id="csrfToken" value="">
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const chatId = window.location.pathname.split("/").pop();
+    let currentUserId = null;
+    let antiForgeryToken = null;
+
+    async function init() {
+        await initProfileButton();
+        currentUserId = await getCurrentUserId();
+        await startAutoUpdate();
+    }
+    let lastMessageCount = 0;
+    let pollingInterval = null;
+
+    async function startAutoUpdate() {
+        await loadChat();
+        pollingInterval = setInterval(async () => {
+            try {
+                const res = await fetch(`/api/chat/${chatId}`);
+                if (!res.ok) return;
+
+                const chat = await res.json();
+
+                // Если количество сообщений изменилось — обновляем
+                if (chat.messages.length !== lastMessageCount) {
+                    renderMessages(chat.messages);
+                    lastMessageCount = chat.messages.length;
+                }
+            } catch (e) {
+                console.warn("Ошибка обновления чата:", e);
+            }
+        }, 2000); // обновление каждые 2 секунды
+    }
+
+    async function getCurrentUserId() {
+        try {
+            const res = await fetch("/api/user/me");
+            if (!res.ok) return null;
+            return await res.json();
+        } catch {
+            return null;
+        }
+    }
+
+    async function loadCsrfToken() {
+        try {
+            const res = await fetch("/csrf-token", { credentials: "include" });
+            if (res.ok) {
+                const data = await res.json();
+                document.getElementById("csrfToken").value = data.token;
+            }
+        } catch (e) {
+            console.warn("Не удалось получить CSRF токен", e);
+        }
+    }
+    loadCsrfToken();
+
+    async function initProfileButton() {
+        const profileIcon = document.getElementById("profileIcon");
+
+        try {
+            const res = await fetch("/api/user/me");
+            if (!res.ok) throw new Error("Не удалось получить id пользователя");
+            const userId = await res.json();
+
+            const userRes = await fetch(`/api/user/profile/${userId}`);
+            const user = await userRes.json();
+            const avatar = user.avatarPath || "/photo/ava/default-avatar.jpg";
+
+            profileIcon.style.backgroundImage = `url('${avatar}')`;
+            profileIcon.textContent = "";
+            profileIcon.onclick = () => window.location.href = `/profile/${userId}`;
+        } catch {
+            profileIcon.onclick = () => alert("Ошибка: не удалось загрузить профиль");
+        }
+    }
+
+    async function loadChat() {
+        const res = await fetch(`/api/chat/${chatId}`);
+        if (!res.ok) {
+            alert("Ошибка загрузки чата");
+            alert(res.status);
+            return;
+        }
+
+        const chat = await res.json();
+        renderMessages(chat.messages);
+    }
+
+    function renderMessages(messages) {
+        const container = document.getElementById("chatMessages");
+        container.innerHTML = "";
+
+        messages.sort((a, b) => new Date(a.sendTime) - new Date(b.sendTime));
+
+        messages.forEach(msg => {
+            const div = document.createElement("div");
+            div.className = "message " + (msg.sender === currentUserId ? "sent" : "received");
+
+            div.innerHTML = `
+                <div>${msg.body}</div>
+                <small>${new Date(msg.sendTime).toLocaleString("ru-RU")}</small>
+            `;
+
+            if (msg.sender === currentUserId) {
+                const actions = document.createElement("div");
+                actions.className = "message-actions";
+                actions.innerHTML = `
+                    <span onclick="editMessage('${msg.id}', '${msg.body.replace(/'/g, "\\'")}')">✏️</span>
+                    <span onclick="deleteMessage('${msg.id}')">🗑️</span>
+                `;
+                div.appendChild(actions);
+            }
+
+            container.appendChild(div);
+        });
+
+        container.scrollTop = container.scrollHeight;
+    }
+
+    document.getElementById("messageForm").addEventListener("submit", async e => {
+        e.preventDefault();
+
+        const input = document.getElementById("messageInput");
+        const text = input.value.trim();
+        if (!text) return;
+
+        const formData = new FormData();
+        formData.append("Sender", currentUserId);
+        formData.append("Body", text);
+        const csrfToken = document.getElementById("csrfToken").value;
+
+        const res = await fetch(`/api/chat/${chatId}/sendMessage`, {
+            method: "POST",
+            headers: { "X-CSRF-TOKEN": csrfToken },
+            body: formData
+        });
+
+        if (res.ok) {
+            input.value = "";
+            await loadChat();
+        } else {
+            alert(res.status);
+            alert("Ошибка при отправке сообщения");
+        }
+    });
+
+    async function editMessage(id, oldBody) {
+        const newBody = prompt("Редактировать сообщение:", oldBody);
+        if (newBody === null || newBody.trim() === "" || newBody === oldBody) return;
+
+        const formData = new FormData();
+        formData.append("Id", id);
+        formData.append("Body", newBody);
+        
+        const csrfToken = document.getElementById("csrfToken").value;
+
+        const res = await fetch(`/api/chat/${chatId}/redactMessage`, {
+            method: "PUT",
+            headers: { "X-CSRF-TOKEN": csrfToken },
+            body: formData
+        });
+
+        if (res.ok) await loadChat();
+        else alert("Ошибка при редактировании сообщения");
+    }
+
+    async function deleteMessage(id) {
+        if (!confirm("Удалить сообщение?")) return;
+
+        const formData = new FormData();
+        formData.append("messageId", id);
+
+        const res = await fetch(`/api/chat/${chatId}/deleteMessage`, {
+            method: "DELETE",
+            body: formData
+        });
+
+        if (res.ok) await loadChat();
+        else alert("Ошибка при удалении сообщения");
+    }
+
+    function logout() {
+        window.location.href = "/logout";
+    }
+
+    init();
+</script>
+</body>
+</html>

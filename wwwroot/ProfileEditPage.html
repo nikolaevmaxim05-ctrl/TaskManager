@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Редактирование профиля</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            min-height: 100vh;
+        }
+
+        /* Навбар */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #343a40;
+            color: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar .title {
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .navbar button {
+            background-color: #3498db;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 15px;
+        }
+
+        .navbar button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Контейнер */
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+
+        .edit-container {
+            display: flex;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* Левая панель */
+        .sidebar {
+            background: #f5f6fa;
+            width: 250px;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar button {
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 16px;
+            cursor: pointer;
+            color: #2c3e50;
+            border-left: 4px solid transparent;
+            transition: 0.2s;
+        }
+
+        .sidebar button:hover {
+            background: #e9ecef;
+        }
+
+        .sidebar button.active {
+            background: #e3f2fd;
+            border-left: 4px solid #3498db;
+            font-weight: bold;
+            color: #2980b9;
+        }
+
+        /* Правая панель (контент вкладок) */
+        .content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .content h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .form-group input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .avatar-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #3498db;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .save-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 16px;
+        }
+
+        .save-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .status {
+            margin-top: 15px;
+            font-size: 15px;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Навбар -->
+<div class="navbar">
+    <div class="navbar-left">
+        <button id="profileIcon">⬅ Назад</button>
+        <div class="title" onclick="window.location.href='/'">Task Manager</div>
+    </div>
+</div>
+
+<!-- Основной блок -->
+<div class="wrapper">
+    <div class="edit-container">
+        <!-- Левая панель -->
+        <div class="sidebar">
+            <button class="active" onclick="showTab('profile')">⚙️ Настройки профиля</button>
+            <button onclick="showTab('account')">🔐 Настройки аккаунта</button>
+        </div>
+
+        <!-- Контент -->
+        <div class="content" id="tabContent">
+            <div id="profile" class="tab active">
+                <h2>Настройки профиля</h2>
+                <div style="text-align:center;">
+                    <img id="avatarPreview" class="avatar-preview" src="/photo/ava/default-avatar.jpg" alt="Аватар" />
+                    <br />
+                    <input type="file" id="avatarInput" accept="image/*" onchange="previewAvatar()" />
+                    <input type="hidden" id="csrfToken" name="csrfToken" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="nickname">Никнейм</label>
+                    <input type="text" id="nickname" placeholder="Введите никнейм..." />
+                </div>
+
+                <button class="save-btn" onclick="saveProfile()">💾 Сохранить изменения</button>
+                <div class="status" id="profileStatus"></div>
+            </div>
+
+            <div id="account" class="tab" style="display:none;">
+                <h2>Настройки аккаунта</h2>
+
+                <div class="form-group">
+                    <label for="email">Электронная почта</label>
+                    <input type="email" id="email" placeholder="Введите новую почту..." />
+                </div>
+
+                <div class="form-group">
+                    <label for="oldPassword">Старый пароль</label>
+                    <input type="password" id="oldPassword" placeholder="Введите старый пароль..." />
+                </div>
+
+                <div class="form-group">
+                    <label for="newPassword">Новый пароль</label>
+                    <input type="password" id="newPassword" placeholder="Введите новый пароль..." />
+                </div>
+
+                <button class="save-btn" onclick="saveAccount()">💾 Обновить аккаунт</button>
+                <div class="status" id="accountStatus"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function getCurrentUserId() {
+        try {
+            const res = await fetch("/api/user/me"); // или твой актуальный эндпоинт
+            if (!res.ok) return null;
+            const id = await res.json();
+            return id;
+        } catch {
+            return null;
+        }
+    }
+
+    async function initProfileButton() {
+        const userId = await getCurrentUserId();
+        const profileIcon = document.getElementById("profileIcon");
+        if (userId) {
+            profileIcon.onclick = () => window.location.href = `/profile/${userId}`;
+        } else {
+            profileIcon.onclick = () => alert("Ошибка: не удалось получить профиль пользователя");
+        }
+    }
+
+    initProfileButton();
+    async function loadCsrfToken() {
+        try {
+            const res = await fetch("/csrf-token", { credentials: "include" });
+            if (res.ok) {
+                const data = await res.json();
+                document.getElementById("csrfToken").value = data.token;
+            }
+        } catch (e) {
+            console.warn("Не удалось получить CSRF токен", e);
+        }
+    }
+
+    loadCsrfToken();
+    const csrfToken = document.getElementById("csrfToken").value;
+    
+    
+    
+    // Переключение вкладок
+    function showTab(tabId) {
+        document.querySelectorAll(".tab").forEach(tab => tab.style.display = "none");
+        document.querySelectorAll(".sidebar button").forEach(btn => btn.classList.remove("active"));
+        document.getElementById(tabId).style.display = "block";
+        event.target.classList.add("active");
+    }
+
+    // Предпросмотр аватара
+    function previewAvatar() {
+        const input = document.getElementById("avatarInput");
+        const preview = document.getElementById("avatarPreview");
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => preview.src = e.target.result;
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // Загрузка данных пользователя
+    async function loadUser() {
+        try {
+            const res = await fetch("/api/user/profile");
+            if (!res.ok) throw new Error("Ошибка загрузки профиля");
+            const user = await res.json();
+            document.getElementById("nickname").value = user.nickName || "";
+            document.getElementById("email").value = user.eMail || "";
+            document.getElementById("avatarPreview").src = user.avatarPath || "/photo/ava/default-avatar.jpg";
+        } catch {
+            console.error("Не удалось загрузить данные пользователя");
+        }
+    }
+
+    // Сохранение настроек профиля
+    async function saveProfile() {
+        const nickname = document.getElementById("nickname").value.trim();
+        const avatarPath = document.getElementById("avatarInput").files[0];
+        const status = document.getElementById("profileStatus");
+        const csrfToken = document.getElementById("csrfToken").value;
+        const formData = new FormData();
+        formData.append("nickName", nickname);
+            formData.append("avatar", avatarPath);
+
+        try {
+            const res = await fetch("/api/user/stats", {
+                headers: {
+                    "X-CSRF-TOKEN": csrfToken
+                },
+                method: "PUT",
+                body: formData
+            });
+            status.textContent = res.ok ? "✅ Профиль обновлён" : "❌ Ошибка при обновлении";
+        } catch {
+            status.textContent = "❌ Ошибка подключения к серверу";
+        }
+    }
+
+    // Сохранение настроек аккаунта
+    async function saveAccount() {
+        const email = document.getElementById("email").value.trim();
+        const oldPass = document.getElementById("oldPassword").value;
+        const newPass = document.getElementById("newPassword").value;
+        const status = document.getElementById("accountStatus");
+
+        if (!oldPass || !newPass) {
+            status.textContent = "⚠️ Введите старый и новый пароль";
+            return;
+        }
+
+        try {
+            const res = await fetch("/api/user/", {
+                method: "PUT",
+                headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken
+                },
+                body: JSON.stringify({ email, OldPassword: oldPass, NewPassword: newPass })
+            });
+            status.textContent = res.ok ? "✅ Данные аккаунта обновлены" : "❌ Ошибка обновления";
+        } catch {
+            status.textContent = "❌ Ошибка подключения к серверу";
+        }
+    }
+
+    loadUser();
+</script>
+
+</body>
+</html>

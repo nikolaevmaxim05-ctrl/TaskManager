@@ -1,0 +1,223 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\nikal\\source\\repos\\TaskManager\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|c:\\users\\nikal\\source\\repos\\taskmanager\\services\\autorizationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|solutionrelative:services\\autorizationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|c:\\users\\nikal\\source\\repos\\taskmanager\\domain\\valueobjects\\autorizationparams.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|solutionrelative:domain\\valueobjects\\autorizationparams.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|c:\\users\\nikal\\source\\repos\\taskmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|c:\\users\\nikal\\source\\repos\\taskmanager\\services\\taskservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|solutionrelative:services\\taskservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|c:\\users\\nikal\\source\\repos\\taskmanager\\services\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|solutionrelative:services\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|c:\\users\\nikal\\source\\repos\\taskmanager\\domain\\valueobjects\\taskstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|solutionrelative:domain\\valueobjects\\taskstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|c:\\users\\nikal\\source\\repos\\taskmanager\\domain\\entities\\task.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|solutionrelative:domain\\entities\\task.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|c:\\users\\nikal\\source\\repos\\taskmanager\\domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|solutionrelative:domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|c:\\users\\nikal\\source\\repos\\taskmanager\\services\\repository\\baserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|solutionrelative:services\\repository\\baserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|c:\\users\\nikal\\source\\repos\\taskmanager\\domain\\entities\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|solutionrelative:domain\\entities\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|c:\\users\\nikal\\source\\repos\\taskmanager\\application\\db\\usercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|solutionrelative:application\\db\\usercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|c:\\users\\nikal\\source\\repos\\taskmanager\\taskmanager.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{F6CFE141-6D77-4224-BCB1-9C0D9737C607}|TaskManager.csproj|solutionrelative:taskmanager.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TaskService.cs",
+              "DocumentMoniker": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Services\\TaskService.cs",
+              "RelativeDocumentMoniker": "Services\\TaskService.cs",
+              "ToolTip": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Services\\TaskService.cs",
+              "RelativeToolTip": "Services\\TaskService.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAAADMAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T12:13:16.63Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AutorizationParams.cs",
+              "DocumentMoniker": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Domain\\ValueObjects\\AutorizationParams.cs",
+              "RelativeDocumentMoniker": "Domain\\ValueObjects\\AutorizationParams.cs",
+              "ToolTip": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Domain\\ValueObjects\\AutorizationParams.cs*",
+              "RelativeToolTip": "Domain\\ValueObjects\\AutorizationParams.cs*",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAIwBIAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-13T12:29:30.232Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AutorizationService.cs",
+              "DocumentMoniker": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Services\\AutorizationService.cs",
+              "RelativeDocumentMoniker": "Services\\AutorizationService.cs",
+              "ToolTip": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Services\\AutorizationService.cs*",
+              "RelativeToolTip": "Services\\AutorizationService.cs*",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAvwBAAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-13T12:26:30.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "UserContext.cs",
+              "DocumentMoniker": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Application\\DB\\UserContext.cs",
+              "RelativeDocumentMoniker": "Application\\DB\\UserContext.cs",
+              "ToolTip": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Application\\DB\\UserContext.cs",
+              "RelativeToolTip": "Application\\DB\\UserContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-13T12:21:45.66Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Services\\Repository\\UserRepository.cs",
+              "RelativeDocumentMoniker": "Services\\Repository\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Services\\Repository\\UserRepository.cs*",
+              "RelativeToolTip": "Services\\Repository\\UserRepository.cs*",
+              "ViewState": "AgIAABEAAAAAAAAAAAAnwCoAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-13T11:58:17.3Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "BaseRepository.cs",
+              "DocumentMoniker": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Services\\Repository\\BaseRepository.cs",
+              "RelativeDocumentMoniker": "Services\\Repository\\BaseRepository.cs",
+              "ToolTip": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Services\\Repository\\BaseRepository.cs*",
+              "RelativeToolTip": "Services\\Repository\\BaseRepository.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-13T11:50:39.916Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TaskStatus.cs",
+              "DocumentMoniker": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Domain\\ValueObjects\\TaskStatus.cs",
+              "RelativeDocumentMoniker": "Domain\\ValueObjects\\TaskStatus.cs",
+              "ToolTip": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Domain\\ValueObjects\\TaskStatus.cs",
+              "RelativeToolTip": "Domain\\ValueObjects\\TaskStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-13T11:39:46.376Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Task.cs",
+              "DocumentMoniker": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Domain\\Entities\\Task.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Task.cs",
+              "ToolTip": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Domain\\Entities\\Task.cs*",
+              "RelativeToolTip": "Domain\\Entities\\Task.cs*",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwCQAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-13T11:39:00.402Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Domain\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\User.cs",
+              "ToolTip": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Domain\\Entities\\User.cs*",
+              "RelativeToolTip": "Domain\\Entities\\User.cs*",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAqwBAAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-13T11:33:47.849Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "BaseEntity.cs",
+              "DocumentMoniker": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Domain\\Entities\\BaseEntity.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\BaseEntity.cs",
+              "ToolTip": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Domain\\Entities\\BaseEntity.cs",
+              "RelativeToolTip": "Domain\\Entities\\BaseEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-13T11:32:18.944Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\nikal\\source\\repos\\TaskManager\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-13T11:24:21.566Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "TaskManager.csproj",
+              "DocumentMoniker": "C:\\Users\\nikal\\source\\repos\\TaskManager\\TaskManager.csproj",
+              "RelativeDocumentMoniker": "TaskManager.csproj",
+              "ToolTip": "C:\\Users\\nikal\\source\\repos\\TaskManager\\TaskManager.csproj",
+              "RelativeToolTip": "TaskManager.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-13T11:25:02.035Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

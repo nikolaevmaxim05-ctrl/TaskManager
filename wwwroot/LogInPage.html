@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход в TaskManager</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            width: 360px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeSlideIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            margin-bottom: 24px;
+            color: #333;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 40px 12px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            border-color: #6c63ff;
+            box-shadow: 0 0 4px #6c63ff80;
+            outline: none;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            user-select: none;
+            font-size: 18px;
+        }
+
+        button {
+            width: 100%;
+            background: #6c63ff;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #5548e3;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(108, 99, 255, 0.3);
+        }
+
+        .footer-text {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .footer-text a {
+            color: #6c63ff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-text a:hover { text-decoration: underline; }
+
+        .error-msg, .success-msg {
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-top: 15px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .error-msg { background: #ff4b4b; color: white; }
+        .success-msg { background: #4caf50; color: white; }
+        .show { opacity: 1; transform: translateY(0); }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+
+        .shake { animation: shake 0.4s ease; }
+    </style>
+</head>
+<body>
+<div class="login-container" id="loginBox">
+    <h2>Вход</h2>
+
+    <!-- 🔒 Добавляем скрытое поле с CSRF токеном -->
+    <!-- Сервер должен выдавать этот токен при загрузке страницы -->
+    <form id="loginForm">
+        <input type="hidden" id="csrfToken" name="csrfToken" value="">
+
+        <div class="input-group">
+            <input id="email" type="email" placeholder="E-mail" required>
+        </div>
+
+        <div class="input-group">
+            <input id="password" type="password" placeholder="Пароль" required>
+            <span class="toggle-password" onclick="togglePassword()">👁</span>
+        </div>
+
+        <button type="submit">Войти</button>
+        <div id="message" class="error-msg"></div>
+    </form>
+
+    <div class="footer-text">
+        Нет аккаунта? <a href="/signin">Зарегистрироваться</a>
+    </div>
+</div>
+
+<script>
+    // 👁 Переключение видимости пароля
+    function togglePassword() {
+        const input = document.getElementById("password");
+        const icon = document.querySelector(".toggle-password");
+        input.type = input.type === "password" ? "text" : "password";
+        icon.textContent = input.type === "password" ? "👁" : "🙈";
+    }
+
+    // 🚨 Простая защита от XSS при выводе сообщений
+    function sanitize(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // 📜 Загружаем CSRF токен с сервера при старте страницы
+    async function loadCsrfToken() {
+        try {
+            const res = await fetch("/csrf-token", { credentials: "include" });
+            if (res.ok) {
+                const data = await res.json();
+                document.getElementById("csrfToken").value = data.token;
+            }
+        } catch (e) {
+            console.warn("Не удалось получить CSRF токен", e);
+        }
+    }
+
+    loadCsrfToken();
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const csrfToken = document.getElementById("csrfToken").value;
+        const message = document.getElementById("message");
+        const box = document.getElementById("loginBox");
+
+        if (!email || !password) {
+            message.innerHTML = sanitize("❌ Заполните все поля!");
+            message.className = "error-msg show";
+            box.classList.add("shake");
+            setTimeout(() => box.classList.remove("shake"), 400);
+            return;
+        }
+
+        // 📤 Отправляем CSRF токен в заголовке
+        const response = await fetch("/postuser", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": csrfToken
+            },
+            credentials: "include",
+            body: JSON.stringify({ email, password })
+        });
+
+        if (response.ok) {
+            message.innerHTML = sanitize("✅ Успешный вход! Перенаправление...");
+            message.className = "success-msg show";
+            setTimeout(() => (window.location.href = "/"), 1000);
+        } else {
+            const errorText = response.status === 401
+                ? "❌ Неверный логин или пароль."
+                : "⚠️ Ошибка сервера. Попробуйте позже.";
+            message.innerHTML = sanitize(errorText);
+            message.className = "error-msg show";
+            box.classList.add("shake");
+            setTimeout(() => box.classList.remove("shake"), 400);
+        }
+    });
+</script>
+</body>
+</html>

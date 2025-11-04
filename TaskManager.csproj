@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>preview</LangVersion>
+    <StartupObject>TaskManager.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="FluentValidation" Version="12.0.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
+    <PackageReference Include="MailKit" Version="4.14.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.*" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.9" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\photo\notes\" />
+    <Folder Include="wwwroot\photo\notes\66370b59-e61b-4476-9282-b1d2e24cd731\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\0d5d0718-3b91-40a0-a5ac-35a8a1bbe713\011a3483-22d5-4e17-859f-986e5dc99beb.JPG" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\0d5d0718-3b91-40a0-a5ac-35a8a1bbe713\c8f21311-2eab-434d-9311-b7349ec7c7b8.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\377310fe-a97f-4640-b234-46ddb3aad5f7\2db072d7-9b3f-4312-84c8-8f2beb411512.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\377310fe-a97f-4640-b234-46ddb3aad5f7\47461bfe-e137-4609-8908-c97387a82799.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\eb176ea4-4891-46d4-a004-798b9247ac29\46a831ae-1923-4232-bef9-20af82588769.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\07899c48-3a72-40f7-8bc8-8043f8ab462d\e2fe0e30-a711-4be2-ad46-8de32fe5ba94.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\2fba625c-6081-4a59-bfb1-b3245b4b4ab6\009b3afc-e8e5-426f-8e7e-053558293c66.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\2fba625c-6081-4a59-bfb1-b3245b4b4ab6\91fab8ef-13b7-47ca-a26b-25a3912cc190.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\2fba625c-6081-4a59-bfb1-b3245b4b4ab6\924717f2-0724-439e-9a19-16a1686f4809.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\2fba625c-6081-4a59-bfb1-b3245b4b4ab6\989b4479-6dbf-45dd-8fc0-f394bb8577a4.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\2fba625c-6081-4a59-bfb1-b3245b4b4ab6\e00bc95a-7923-4cad-a5b5-37ade1729d8f.JPG" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\7d79cc60-a94b-4110-8310-a258277c18c9\cd05fdf7-8190-4a48-8da5-161b3f9828d2.JPG" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\7d79cc60-a94b-4110-8310-a258277c18c9\e1d4e916-4b6b-49de-8fd4-ae62168c62e2.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\9186b9ef-1f7d-4923-b663-078db2bee751\087c2d65-3166-427e-a6fb-e5a05f4ab135.JPG" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\9186b9ef-1f7d-4923-b663-078db2bee751\787b7be7-051e-44dd-8ff0-ad98aac575be.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\a2021fa1-b8cd-4dc5-86cc-5ffd000c9998\5e9fa2d8-5eda-45cc-b7b3-fa1506222034.JPG" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\a2021fa1-b8cd-4dc5-86cc-5ffd000c9998\b11c4c4e-79f7-4e7a-bb02-5c80045ed0c5.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\e785b45d-7024-430e-a1c7-35f633494175\01bc54f2-103e-4c9b-a311-19b7bbb46c5b.JPG" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\e785b45d-7024-430e-a1c7-35f633494175\75f5b0a7-7d25-495f-a40d-5e0107d2785a.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\495cb061-f0ee-498f-b773-db6217c5750d\7acd53fd-f955-4bb6-9239-50beb0c8086d.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\photo\notes\495cb061-f0ee-498f-b773-db6217c5750d\e5521e7d-686c-438a-bdd6-2d5521796af5.jpg" />
+  </ItemGroup>
+
+</Project>
