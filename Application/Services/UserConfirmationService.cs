@@ -45,6 +45,6 @@ public class UserConfirmationService : IUserConfirmationService
         await _userConfirmRepo.Create(userConfirmation);
 
         // отправляем код подтверждения на почту пользователю
-        await _emailService.SendMailAsync(userConfirmation.Email, "Подтверждение регистрации на сайте BIG BOOBS PORN", token);
+        await _emailService.SendMailAsync(userConfirmation.Email, "Подтверждение регистрации на сайте TaskManager", token);
     }
 }
