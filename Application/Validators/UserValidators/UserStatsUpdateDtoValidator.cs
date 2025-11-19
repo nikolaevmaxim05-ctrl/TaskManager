@@ -18,8 +18,8 @@ public class UserStatsUpdateDtoValidator : AbstractValidator<UserProfileUpdateDt
         When(x => x.Avatar != null, () =>
         {
             RuleFor(x => x.Avatar)
-                .Must(f => f.Length <= 2 * 1024 * 1024)
-                .WithMessage("Размер файла не должен превышать 2 МБ.")
+                .Must(f => f.Length <= 6 * 1024 * 1024)
+                .WithMessage("Размер файла не должен превышать 6 МБ.")
                 .Must(f => IsSupportedImage(f))
                 .WithMessage("Разрешены только изображения форматов JPG, JPEG, PNG, GIF, WEBP.");
         });

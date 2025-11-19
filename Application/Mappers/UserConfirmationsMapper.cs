@@ -10,7 +10,7 @@ public static class UserConfirmationsMapper
         {
             Id = Guid.NewGuid(),
             Email = dto.EMail,
-            Expiration = DateTime.Now + TimeSpan.FromMinutes(1),
+            Expiration = DateTime.UtcNow + TimeSpan.FromMinutes(1),
             Token = token
         };
 }

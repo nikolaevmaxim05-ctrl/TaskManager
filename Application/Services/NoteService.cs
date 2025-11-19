@@ -125,7 +125,7 @@ public class NoteService : INoteService
         {
             Id = dto.Id,
             BodyOfNote = dto.BodyOfNote,
-            DateOfDeadLine = dto.DateOfDeadLine,
+            DateOfDeadLine = dto.DateOfDeadLine.ToUniversalTime(),
             HeadOfNote = dto.HeadOfNote,
             Images = dto.Images,
             Status = dto.Status

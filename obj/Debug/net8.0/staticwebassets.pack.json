@@ -57,8 +57,16 @@
       "PackagePath": "staticwebassets\\photo\\ava\\07b64ece-848c-4674-ac64-6825a73513f9.jpg"
     },
     {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\ava\\42930e13-8d1d-4431-be2d-495524962db0.jpg",
+      "PackagePath": "staticwebassets\\photo\\ava\\42930e13-8d1d-4431-be2d-495524962db0.jpg"
+    },
+    {
       "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\ava\\45ffdab5-5fd7-43a2-92dc-d5e664dc1311.jpg",
       "PackagePath": "staticwebassets\\photo\\ava\\45ffdab5-5fd7-43a2-92dc-d5e664dc1311.jpg"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\ava\\4f91495b-f29f-478c-a2ab-98e7ff10a8b7.png",
+      "PackagePath": "staticwebassets\\photo\\ava\\4f91495b-f29f-478c-a2ab-98e7ff10a8b7.png"
     },
     {
       "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\ava\\548b4b98-7df4-4152-ae67-6b3dd1ae29e0.PNG",
@@ -89,8 +97,28 @@
       "PackagePath": "staticwebassets\\photo\\notes\\0f86c365-ca89-4839-96b7-876278a9d43b\\56306cea-c187-485b-b2f1-f292c299d361.JPG"
     },
     {
-      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\notes\\6e6c88b9-b273-434b-a5a4-b1fe32792412\\3f50fe34-da6c-44de-87bd-3e1f523ea531.jpg",
-      "PackagePath": "staticwebassets\\photo\\notes\\6e6c88b9-b273-434b-a5a4-b1fe32792412\\3f50fe34-da6c-44de-87bd-3e1f523ea531.jpg"
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\notes\\3bc8debd-e42d-4e95-b7a3-682fd943be52\\6b2695ef-c24c-4c38-87cd-b0cbad6e40b9.jpg",
+      "PackagePath": "staticwebassets\\photo\\notes\\3bc8debd-e42d-4e95-b7a3-682fd943be52\\6b2695ef-c24c-4c38-87cd-b0cbad6e40b9.jpg"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\notes\\3bc8debd-e42d-4e95-b7a3-682fd943be52\\8171a53d-1531-4f33-a53b-de9cc7dba0c1.jpg",
+      "PackagePath": "staticwebassets\\photo\\notes\\3bc8debd-e42d-4e95-b7a3-682fd943be52\\8171a53d-1531-4f33-a53b-de9cc7dba0c1.jpg"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\notes\\56688303-300b-4200-aaff-8b618cf0eeab\\7febd7fa-3f3b-4dc2-8d8f-30ceda2e8b63.jpg",
+      "PackagePath": "staticwebassets\\photo\\notes\\56688303-300b-4200-aaff-8b618cf0eeab\\7febd7fa-3f3b-4dc2-8d8f-30ceda2e8b63.jpg"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\notes\\5a21ea7b-3f97-4290-bde0-ee444ad5593d\\b7d4cb08-d3ce-4a25-8fce-c00840aee41b.jpg",
+      "PackagePath": "staticwebassets\\photo\\notes\\5a21ea7b-3f97-4290-bde0-ee444ad5593d\\b7d4cb08-d3ce-4a25-8fce-c00840aee41b.jpg"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\notes\\6f07f925-7cd6-44c4-b6bd-95560c565771\\123390d2-575e-4349-a4aa-97dec2d2a279.png",
+      "PackagePath": "staticwebassets\\photo\\notes\\6f07f925-7cd6-44c4-b6bd-95560c565771\\123390d2-575e-4349-a4aa-97dec2d2a279.png"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\notes\\a97cdf24-4556-4910-b111-a30a08b7e0f1\\ae90e642-8f2e-46cf-b5df-c0a1ffc3ef53.jpg",
+      "PackagePath": "staticwebassets\\photo\\notes\\a97cdf24-4556-4910-b111-a30a08b7e0f1\\ae90e642-8f2e-46cf-b5df-c0a1ffc3ef53.jpg"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.TaskManager.Microsoft.AspNetCore.StaticWebAssets.props",

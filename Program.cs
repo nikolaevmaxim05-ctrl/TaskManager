@@ -26,8 +26,7 @@ namespace TaskManager
                 .CreateLogger();
 
             builder.Host.UseSerilog();
-
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            
             
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -50,7 +49,7 @@ namespace TaskManager
 
             builder.Services.AddDbContext<UserContext>(option =>
             {
-                option.UseSqlite(connectionString);
+                option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             
             builder.Services.AddScoped<IUserRepository, UserRepository>();

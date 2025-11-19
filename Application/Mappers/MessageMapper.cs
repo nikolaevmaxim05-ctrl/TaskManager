@@ -12,7 +12,7 @@ public static class MessageMapper
             Id = Guid.NewGuid(),
             Sender = sender,
             Body = dto.Body,
-            SendTime = DateTime.Now,
+            SendTime = DateTime.UtcNow,
             Chat = chat,
             ChatId = chat.Id
         };

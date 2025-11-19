@@ -19,7 +19,7 @@ public static class NoteMapper
             UserId = userId,
             BodyOfNote = dto.BodyOfNote,
             HeadOfNote = dto.HeadOfNote,
-            DateOfDeadLine = dto.DateOfDeadLine,
+            DateOfDeadLine = dto.DateOfDeadLine.ToUniversalTime(),
             Status = NoteStatus.InProgress,
             Images = images
         };
@@ -29,7 +29,7 @@ public static class NoteMapper
     {
         note.HeadOfNote = dto.HeadOfNote;
         note.BodyOfNote = dto.BodyOfNote;
-        note.DateOfDeadLine = dto.DateOfDeadLine;
+        note.DateOfDeadLine = dto.DateOfDeadLine.ToUniversalTime();
         note.Status = dto.Status;
 
         // ✅ вместо пересоздания — обновляем существующую коллекцию

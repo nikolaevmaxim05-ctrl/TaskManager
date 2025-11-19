@@ -6,8 +6,6 @@ using TaskManager.Application.DTOs.UserDTOs;
 using TaskManager.Application.Interfaces;
 using TaskManager.Application.Mappers;
 using TaskManager.Domain.Entities;
-using TaskManager.Domain.ValueObjects;
-using TaskManager.Infrastructure.DB.Repository;
 
 namespace TaskManager.Application.Services
 {

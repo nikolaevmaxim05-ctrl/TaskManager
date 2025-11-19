@@ -52,7 +52,7 @@ public class UserProfileService : IUserProfileService
     /// </summary>
     /// <param name="context"></param>
     /// <param name="dto"></param>
-    /// <returns></returns>
+    /// <returns></returns>0
     public async Task UpdateProfile(HttpContext context, UserProfileUpdateDto dto)
     {
         _logger.LogInformation("Пробуем обновить профиль авторизованного пользователя");
@@ -66,11 +66,15 @@ public class UserProfileService : IUserProfileService
             throw new UnauthorizedAccessException();
         }
 
-        // Папка для аватарок
-        var avatarDir = Path.Combine(_env.WebRootPath, "photo", "ava");
+        string relativePath = null;
+        if (dto.Avatar != null)
+        {
+            // Папка для аватарок
+            var avatarDir = Path.Combine(_env.WebRootPath, "photo", "ava");
 
-        // Сохраняем аватар
-        var relativePath = await _imageService.SaveImageAsync(dto.Avatar, avatarDir, user.UserStats.AvatarPath);
+            // Сохраняем аватар
+            relativePath = await _imageService.SaveImageAsync(dto.Avatar, avatarDir, user.UserStats.AvatarPath);
+        }
 
         // Обновляем остальные поля пользователя
         user.ApplyUpdate(dto);
