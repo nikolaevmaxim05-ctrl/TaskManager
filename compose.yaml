@@ -1,0 +1,17 @@
+﻿version: '3.9'
+
+services:
+  db:
+    image: postgres:16
+    container_name: taskmanager_db
+    environment:
+      POSTGRES_DB: PostgreSQL
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: maknik
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
