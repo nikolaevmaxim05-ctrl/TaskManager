@@ -63,7 +63,7 @@ ASP.NET Core Minimal API
 
 Entity Framework Core
 
-PostgreSQL (ранее SQLite)
+PostgreSQL
 
 SignalR
 
@@ -73,7 +73,7 @@ FluentValidation
 
 Static Files
 
-xUnit (начало тестов)
+xUnit
 
 LINQ, async/await
 
