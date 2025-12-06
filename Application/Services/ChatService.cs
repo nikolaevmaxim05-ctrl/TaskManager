@@ -11,13 +11,15 @@ public class ChatService : IChatService
     private readonly IChatRepository _chatRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMessageRepository _messageRepository;
+    private readonly IChatHub _chatHub;
     public ChatService(ILogger<ChatService> logger,  IChatRepository chatRepository, IUserRepository userRepository, 
-        IMessageRepository messageRepository)
+        IMessageRepository messageRepository,  IChatHub chatHub)
     {
         _logger = logger;
         _chatRepository = chatRepository;
         _userRepository = userRepository;
         _messageRepository = messageRepository;
+        _chatHub = chatHub;
     }
     /// <summary>
     /// Метод для получения всех чатов авторизованного пользователя
@@ -64,7 +66,7 @@ public class ChatService : IChatService
     /// <param name="message"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task SendMessage(HttpContext context, Guid chatId, MessageCreateDto message)
+    public async Task SendMessage(HttpContext context, Guid chatId, MessageCreateDto messageCreateDto)
     {
         _logger.LogInformation("Пробуем отправить сообщение в чат");
         
@@ -72,9 +74,13 @@ public class ChatService : IChatService
         var chat = await ReadChatAndCheckAuth(context, chatId);
         var user = await _userRepository.GetUserByID(Guid.Parse(context.User.Identity.Name));
 
+        var message = messageCreateDto.ToDomain(user, chat);
+        
         //сохраняем сообщение в базе данных
-        await _messageRepository.Create(message.ToDomain(user, chat));
+        await _messageRepository.Create(message);
         await _chatRepository.Update(chat);
+        
+        await _chatHub.SendMessage(message);
     }
 
     /// <summary>
@@ -103,6 +109,8 @@ public class ChatService : IChatService
         //сохранение изменений в бд
         await _messageRepository.Update(message);
         await _chatRepository.Update(chat);
+        
+        await _chatHub.UpdateMessage(message);
     }
 
     /// <summary>
@@ -131,6 +139,8 @@ public class ChatService : IChatService
         //сохранение изменений в бд
         await _messageRepository.Delete(removedMessage);
         await _chatRepository.Update(chat);
+
+        await _chatHub.DeleteMessage(removedMessage);
     }
 
     

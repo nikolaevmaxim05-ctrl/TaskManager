@@ -261,3 +261,8 @@ C:\Work\TaskManager\TaskManager\bin\Debug\net8.0\zh-Hant\Microsoft.VisualStudio.
 C:\Work\TaskManager\TaskManager\bin\Debug\net8.0\Npgsql.dll
 C:\Work\TaskManager\TaskManager\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Work\TaskManager\TaskManager\obj\Debug\net8.0\TaskManager.sourcelink.json
+C:\Work\TaskManager\TaskManager\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Work\TaskManager\TaskManager\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Work\TaskManager\TaskManager\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Work\TaskManager\TaskManager\obj\Debug\net8.0\TaskManager.MvcApplicationPartsAssemblyInfo.cs
+C:\Work\TaskManager\TaskManager\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll

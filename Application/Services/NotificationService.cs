@@ -9,23 +9,28 @@ public class NotificationService: INotificationService
     private readonly ILogger<NotificationService> _logger;
     private readonly IUserRepository _userRepository;
     private readonly INotificationRepository _notificationRepository;
+    private readonly INotificationHub _notificationHubContext;
 
-    public NotificationService(IUserRepository userRepository, INotificationRepository notificationRepository, ILogger<NotificationService> logger)
+    public NotificationService(IUserRepository userRepository, INotificationRepository notificationRepository,
+        ILogger<NotificationService> logger,  INotificationHub notificationHubContext)
     {
         _logger = logger;
         _userRepository = userRepository;
         _notificationRepository = notificationRepository;
+        _notificationHubContext = notificationHubContext;
     }
     public async Task<bool> SendNotificationAsync(Notification notification, Guid recipientId)
     {
-        _logger.LogInformation($"Попытка отправить уведомление {notification.Id} пользователю {recipientId}, отправитель {notification.SenderId}");
+        _logger.LogInformation($"Попытка отправить уведомление {notification.Id} пользователю {recipientId}, " +
+                               $"отправитель {notification.SenderId}");
         
         //получаем получателя уведомления с бд по id
         var recipient = await _userRepository.GetUserByID(recipientId);
 
         if (recipient == null)
         {
-            _logger.LogError($"Не получилось найти пользователя {recipientId} в бд, которому должно было быть отправленно уведомление {notification.Id}");
+            _logger.LogError($"Не получилось найти пользователя {recipientId} в бд, которому должно было " +
+                             $"быть отправленно уведомление {notification.Id}");
             
             return false;
         }
@@ -33,7 +38,9 @@ public class NotificationService: INotificationService
         //добавляем получатель уведомления новое уведомление, а затем сохраняем это уведомление в базе данных
         recipient.Notifications.Add(notification);
 
-        _notificationRepository.Create(notification);
+        await _notificationRepository.Create(notification);
+        
+        await _notificationHubContext.SendNotification(notification, recipientId);
         
         return true;
     }
@@ -42,21 +49,24 @@ public class NotificationService: INotificationService
     {
         string nickName = (await _userRepository.GetUserByID(sender)).UserStats.NickName;
         return await SendNotificationAsync(
-            new Notification(sender, $"Пользователь {nickName} отправил вам запрос в друзья", NotificationStatus.Unread, NotificationType.FriendRequest), recipient);
+            new Notification(sender, $"Пользователь {nickName} отправил вам запрос в друзья", 
+                NotificationStatus.Unread, NotificationType.FriendRequest), recipient);
     }
 
     public async Task<bool> DismissFriendRequestAsync(Guid sender, Guid recipient)
     {
         string nickName = (await _userRepository.GetUserByID(sender)).UserStats.NickName;
         return await SendNotificationAsync(
-            new Notification(sender, $"Пользователь {nickName} отклонил ваш запрос в друзья", NotificationStatus.Unread, NotificationType.Message), recipient);
+            new Notification(sender, $"Пользователь {nickName} отклонил ваш запрос в друзья",
+                NotificationStatus.Unread, NotificationType.Message), recipient);
     }
 
     public async Task<bool> AcceptFriendRequestAsync(Guid sender, Guid recipient)
     {
         string nickName = (await _userRepository.GetUserByID(sender)).UserStats.NickName;
         return await SendNotificationAsync(
-            new Notification(sender, $"Пользователь {nickName} принял ваш запрос в друзья", NotificationStatus.Unread, NotificationType.Message), recipient);
+            new Notification(sender, $"Пользователь {nickName} принял ваш запрос в друзья", 
+                NotificationStatus.Unread, NotificationType.Message), recipient);
     }
 
     /// <summary>

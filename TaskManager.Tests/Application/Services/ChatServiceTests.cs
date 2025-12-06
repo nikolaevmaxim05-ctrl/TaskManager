@@ -15,14 +15,18 @@ public class ChatServiceTests
     private readonly Mock<IChatRepository>  _chatRepo;
     private readonly Mock<IUserRepository> _userRepo;
     private readonly Mock<IMessageRepository> _messageRepo;
+    private readonly Mock<IChatHub> _chatHub;
     private readonly ChatService _chatService;
+    
     public ChatServiceTests()
     {
         _logger = new Mock<ILogger<ChatService>>();
         _chatRepo = new Mock<IChatRepository>();
         _userRepo = new Mock<IUserRepository>();
         _messageRepo = new Mock<IMessageRepository>();
-        _chatService = new ChatService(_logger.Object, _chatRepo.Object, _userRepo.Object, _messageRepo.Object);
+        _chatHub =  new Mock<IChatHub>();
+        _chatService = new ChatService(_logger.Object, _chatRepo.Object, _userRepo.Object, _messageRepo.Object,  
+            _chatHub.Object);
     }
 
     [Fact]

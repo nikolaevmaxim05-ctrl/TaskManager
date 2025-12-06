@@ -52,6 +52,8 @@ public static class AuthEndpoints
 
             //устанавливаем клаймы
             autorizationService.SetClaims(context, user.Id);
+            
+            
 
             return Results.Ok(new { redirect = "/work" });
         });

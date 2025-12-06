@@ -13,14 +13,16 @@ public class NotificationServiceTest
     private readonly NotificationService _service;
     private readonly Mock<IUserRepository> _userRepository;
     private readonly Mock<INotificationRepository> _notificationRepository;
+    private readonly Mock<INotificationHub> _notificationHubContext;
 
     public NotificationServiceTest()
     {
         _logger = new Mock<ILogger<NotificationService>>();
         _userRepository = new Mock<IUserRepository>();
         _notificationRepository = new Mock<INotificationRepository>();
-        
-        _service = new NotificationService(_userRepository.Object,  _notificationRepository.Object, _logger.Object);
+        _notificationHubContext = new Mock<INotificationHub>();
+        _service = new NotificationService(_userRepository.Object,  _notificationRepository.Object, _logger.Object, 
+            _notificationHubContext.Object);
     }
 
     [Fact]

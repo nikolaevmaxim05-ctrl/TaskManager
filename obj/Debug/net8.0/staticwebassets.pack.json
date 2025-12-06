@@ -49,6 +49,54 @@
       "PackagePath": "staticwebassets\\index.html"
     },
     {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\js\\AddFriendPageHandler.js",
+      "PackagePath": "staticwebassets\\js\\AddFriendPageHandler.js"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\js\\Chat.js",
+      "PackagePath": "staticwebassets\\js\\Chat.js"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\js\\FriendsPageHandler.js",
+      "PackagePath": "staticwebassets\\js\\FriendsPageHandler.js"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\js\\IndexPageHandler.js",
+      "PackagePath": "staticwebassets\\js\\IndexPageHandler.js"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\js\\LogInPageHandler.js",
+      "PackagePath": "staticwebassets\\js\\LogInPageHandler.js"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\js\\ProfileEditPageHandler.js",
+      "PackagePath": "staticwebassets\\js\\ProfileEditPageHandler.js"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\js\\ProfilePageHandler.js",
+      "PackagePath": "staticwebassets\\js\\ProfilePageHandler.js"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\js\\SignInPageHandler.js",
+      "PackagePath": "staticwebassets\\js\\SignInPageHandler.js"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\js\\TaskCreatePageHandler.js",
+      "PackagePath": "staticwebassets\\js\\TaskCreatePageHandler.js"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\js\\TaskEditPageHandler.js",
+      "PackagePath": "staticwebassets\\js\\TaskEditPageHandler.js"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\js\\TaskPageHandler.js",
+      "PackagePath": "staticwebassets\\js\\TaskPageHandler.js"
+    },
+    {
+      "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\js\\WorkPageHandler.js",
+      "PackagePath": "staticwebassets\\js\\WorkPageHandler.js"
+    },
+    {
       "Id": "C:\\Work\\TaskManager\\TaskManager\\wwwroot\\photo\\ava\\07091204-ef8a-49ac-80a6-33b43672cb22.PNG",
       "PackagePath": "staticwebassets\\photo\\ava\\07091204-ef8a-49ac-80a6-33b43672cb22.PNG"
     },

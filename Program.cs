@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Serilog;
+using TaskManager.Application.Hubs;
 using TaskManager.Application.Interfaces;
 using TaskManager.Application.Services;
 using TaskManager.Application.Validators;
@@ -51,6 +52,8 @@ namespace TaskManager
             {
                 option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            builder.Services.AddSignalR();
             
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<INoteRepository, NoteRepository>();
@@ -69,7 +72,9 @@ namespace TaskManager
             builder.Services.AddScoped<IFriendServise, FriendService>();
             builder.Services.AddScoped<INoteService, NoteService>();
             builder.Services.AddScoped<IUserProfileService, UserProfileService>();
-            
+
+            builder.Services.AddScoped<IChatHub, ChatHubContext>();
+            builder.Services.AddScoped<INotificationHub, NotificationHubContext>();
             
 
             builder.Services.AddValidatorsFromAssemblyContaining<NoteCreatedDtoValidator>();
@@ -80,20 +85,26 @@ namespace TaskManager
             builder.Services.AddValidatorsFromAssemblyContaining<UserConfirmationCreateDtoValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<MessageCreateDtoValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<MessageUpdateDtoValidator>();
+            
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
                    
             builder.Services.AddAntiforgery(options =>
             {
                 options.HeaderName = "X-CSRF-TOKEN";
             });
             
+            
             var app = builder.Build();
 
+            app.UseRouting();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
-
+            
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseAntiforgery();
+           
             
             app.UseStaticFiles(new StaticFileOptions
             {
@@ -109,7 +120,13 @@ namespace TaskManager
             app.MapFriendEndpoints();
             app.MapNotificationEndpoints();
             app.MapChatEndpoints();
-            
+
+            app.MapHub<ChatHub>("/chatHub");
+            app.MapHub<NotificationHub>("/notificationHub");
+           
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
             
             
             

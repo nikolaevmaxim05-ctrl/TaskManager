@@ -96,7 +96,8 @@ namespace TaskManager.Application.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, userId.ToString())
+                new Claim(ClaimTypes.Name, userId.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString())
             };
 
             var claimIdentity = new ClaimsIdentity(claims, "cookies");

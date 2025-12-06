@@ -1,4 +1,7 @@
+using Castle.Components.DictionaryAdapter.Xml;
 using Microsoft.AspNetCore.Authorization;
+using TaskManager.Application.Hubs;
+using TaskManager.Application.Interfaces;
 
 namespace TaskManager.Presentation.Endpoints;
 
