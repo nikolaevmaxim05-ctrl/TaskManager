@@ -76,15 +76,15 @@ public static class AuthEndpoints
             {
                 user = await autorizationService.SignIn(userCreateDto);
             }
-            catch (BadHttpRequestException e)
-            {
-                user = null;
-                return Results.BadRequest("Неверный код");
-            }
             catch (DuplicateNameException e)
             {
                 user = null;
                 return Results.Conflict($"Пользователь с email {userCreateDto.EMail} уже существует");
+            }
+            catch (BadHttpRequestException e)
+            {
+                user = null;
+                return Results.BadRequest("Неверный код");
             }
             
             //создаем клеймы и входим в систему
