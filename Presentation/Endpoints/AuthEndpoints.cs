@@ -1,4 +1,5 @@
 using System.Data;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +17,20 @@ public static class AuthEndpoints
 {
     public static void MapAuthEndpoints(this IEndpointRouteBuilder app)
     {
+        app.MapPost("/test-login", async (Guid id,HttpContext context )=>
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, id.ToString()),
+                new Claim(ClaimTypes.Email, "correctEmail@mail.ru")
+            };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+
+            await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            context.Response.StatusCode = 200;
+        });
         // выход из аккаунта
         app.MapGet("/logout", async (HttpContext context,  ILogger<Program> logger) =>
         {

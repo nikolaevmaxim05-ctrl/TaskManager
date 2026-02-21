@@ -69,11 +69,10 @@ public class UserProfileService : IUserProfileService
         string relativePath = null;
         if (dto.Avatar != null)
         {
-            // Папка для аватарок
-            var avatarDir = Path.Combine(_env.WebRootPath, "photo", "ava");
-
+            //удаляем старый аватар
+            await _imageService.DeleteImageAsync(user.UserStats.AvatarPath);
             // Сохраняем аватар
-            relativePath = await _imageService.SaveImageAsync(dto.Avatar, avatarDir, user.UserStats.AvatarPath);
+            relativePath = await _imageService.SaveImageAsync(dto.Avatar);
         }
 
         // Обновляем остальные поля пользователя

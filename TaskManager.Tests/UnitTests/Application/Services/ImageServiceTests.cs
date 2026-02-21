@@ -9,10 +9,10 @@ public class ImageServiceTests
     private readonly Mock<ILogger<ImageService>> _logger;
     private readonly ImageService _service;
 
-    public ImageServiceTests()
+    public ImageServiceTests(IConfiguration configuration)
     {
         _logger = new Mock<ILogger<ImageService>>();
-        _service = new ImageService(_logger.Object);
+        _service = new ImageService(_logger.Object, configuration);
     }
 
     private IFormFile CreateFormFile(string fileName, string contentType, string content = "fake image data")
@@ -33,7 +33,7 @@ public class ImageServiceTests
 
         var file = CreateFormFile("test.jpg", "image/jpeg");
 
-        var result = await _service.SaveImageAsync(file, tempDir);
+        var result = await _service.SaveImageAsync(file);
 
         Assert.NotNull(result);
         Assert.StartsWith("/", result);
@@ -59,7 +59,7 @@ public class ImageServiceTests
 
         var file = new Mock<IFormFile>();
         file.Setup(f => f.Length).Returns(0);
-        var result = await _service.SaveImageAsync(file.Object, tempDir);
+        var result = await _service.SaveImageAsync(file.Object);
         
         Assert.False(File.Exists(Path.Combine(tempDir, "test.jpg")));
         Assert.Equal(string.Empty, result);
@@ -72,7 +72,7 @@ public class ImageServiceTests
         var file = CreateFormFile("test.exe", "application/octet-stream");
         
         await Assert.ThrowsAsync<InvalidOperationException>(async () => await _service
-            .SaveImageAsync(file, tempDir, ""));
+            .SaveImageAsync(file));
     }
     [Fact]
     public async Task SaveImageAsync_DeletesOldFile_WhenNewSaving()
@@ -88,38 +88,10 @@ public class ImageServiceTests
 
         var newFile = CreateFormFile("new.jpg", "image/jpeg");
 
-        await _service.SaveImageAsync(newFile, tempDir, $"/{oldFileName}");
+        await _service.SaveImageAsync(newFile);
         
         Assert.False(File.Exists("/old.jpg"));
     }
-
-    [Fact]
-    public async Task ReadImageAsync_ReturnsImage_WhenImageIsValid()
-    {
-        var file =  CreateFormFile("test.jpg", "image/jpg");
-        var webRootPath = Directory.CreateTempSubdirectory("wwwroot").FullName;
-        var fileName = Path.Combine(webRootPath, "test.jpg");
-        await File.WriteAllBytesAsync(fileName, new  byte[] { 1, 2, 3 });
-
-        var result = await _service.ReadImageAsync("/test.jpg", webRootPath);
-        
-        Assert.NotNull(result);
-        Assert.Equal("test.jpg", result.FileName);
-        Assert.Equal(file.ContentType, result.ContentType); 
-    }
-    [Fact]
-    public async Task ReadImageAsync_ArgumentException_WhenImageIsNull()
-    {
-        await Assert.ThrowsAsync<ArgumentException>(async () => await _service.ReadImageAsync(null, null));
-    }
-    [Fact]
-    public async Task ReadImageAsync_FileNotFoundException_WhenImageIsNotExists()
-    {
-        var webRootPath = Directory.CreateTempSubdirectory("wwwroot").FullName;
-
-        await Assert.ThrowsAsync<FileNotFoundException>(async () => await _service.ReadImageAsync("/test.jpg", webRootPath));
-    }
-    
     [Fact]
     public async Task DeleteImageAsync_ReturnsImage_WhenImageIsValid()
     {
@@ -127,7 +99,7 @@ public class ImageServiceTests
         var fileName = Path.Combine(webRootPath, "test.jpg");
         await File.WriteAllBytesAsync(fileName, new  byte[] { 1, 2, 3 });
 
-        var result = await _service.DeleteImageAsync("/test.jpg", webRootPath);
+        var result = await _service.DeleteImageAsync(webRootPath);
         
         Assert.True(result);
         Assert.False(File.Exists(Path.Combine(webRootPath, "test.jpg")));
@@ -137,7 +109,7 @@ public class ImageServiceTests
     {
         var webRootPath = Directory.CreateTempSubdirectory("wwwroot").FullName;
         
-        var result =  await _service.DeleteImageAsync(null, webRootPath);
+        var result =  await _service.DeleteImageAsync(webRootPath);
         
         Assert.False(result);
     }
@@ -147,7 +119,7 @@ public class ImageServiceTests
         var webRootPath = Directory.CreateTempSubdirectory("wwwroot").FullName;
         var fileName = "test.jpg";
         
-        var result = await _service.DeleteImageAsync(fileName, webRootPath);
+        var result = await _service.DeleteImageAsync(webRootPath);
         
         Assert.False(result);
     }

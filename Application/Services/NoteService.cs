@@ -133,22 +133,14 @@ public class NoteService : INoteService
 
         //обновление изображений в задаче
         var images = new List<string>();
-        var savePath = Path.Combine(_environment.WebRootPath, $@"photo\notes\{note.Id}");
 
         if (noteDto.Images is { Count: > 0 })
         {
             foreach (var upload in noteDto.Images)
             {
-                var fullPath = await _imageService.SaveImageAsync(upload, savePath, null);
+                var fullPath = await _imageService.SaveImageAsync(upload);
 
-                var relativePath = Path.GetRelativePath(_environment.WebRootPath, fullPath)
-                    .Replace("\\", "/");
-
-                if (!relativePath.StartsWith("/"))
-                    relativePath = "/" + relativePath;
-
-                images.Add(relativePath);
-
+                images.Add(fullPath);
             }
         }
 
@@ -160,7 +152,7 @@ public class NoteService : INoteService
         {
             bool shouldKeep = existingImages.Contains(img) || newFileNames.Contains(img);
             if (!shouldKeep)
-                await _imageService.DeleteImageAsync(img, _environment.WebRootPath);
+                await _imageService.DeleteImageAsync(img);
         }
 
         note.ApplyUpdate(noteDto, images);
@@ -182,18 +174,16 @@ public class NoteService : INoteService
         //маппим dto в domain
         var note = noteCreateDto.ToDomain(userId);
             
-        //маппим все изображения и сохраняем их
         var images = new List<string>();
-        var savePath = Path.Combine(_environment.WebRootPath, $"photo/notes/{note.Id}");
-
-        if (noteCreateDto.Images != null)
+        //маппим все изображения и сохраняем их
+        if (noteCreateDto.Images is { Count: > 0 })
         {
-            noteCreateDto.Images.ForEach(async u =>
+            foreach (var upload in noteCreateDto.Images)
             {
-                var relativePath = await _imageService.SaveImageAsync(u, savePath, null);
-                images.Add(relativePath);
-            });
+                images.Add(await _imageService.SaveImageAsync(upload));
+            }
         }
+
         note.Images = images;
             
         //сохраняем новую задачу в бд

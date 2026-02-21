@@ -7,6 +7,7 @@ using TaskManager.Application.Validators.MessageValidators;
 namespace TaskManager.Presentation.Endpoints;
 
 public static class ChatEndpoints
+
 {
     public static void MapChatEndpoints(this IEndpointRouteBuilder app)
     {

@@ -27,7 +27,7 @@ public class EmailService : IEmailService
         }
         
         var email = new MimeMessage();
-        email.From.Add(MailboxAddress.Parse(_config["Email:From"]));
+        email.From.Add(MailboxAddress.Parse(_config["EmailFrom"]));
         email.To.Add(MailboxAddress.Parse(to));
         email.Subject = subject;
 
@@ -35,8 +35,8 @@ public class EmailService : IEmailService
         email.Body = builder.ToMessageBody();
 
         using var smtp = new SmtpClient();
-        await smtp.ConnectAsync(_config["Email:SmtpServer"], int.Parse(_config["Email:Port"]), true);
-        await smtp.AuthenticateAsync(_config["Email:Username"], _config["Email:Password"]);
+        await smtp.ConnectAsync(_config["EmailSmtpServer"], int.Parse(_config["EmailPort"]), true);
+        await smtp.AuthenticateAsync(_config["EmailUsername"], _config["EmailPassword"]);
         await smtp.SendAsync(email);
         await smtp.DisconnectAsync(true);
     }

@@ -1,6 +1,8 @@
+using Azure.Identity;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.Extensions.FileProviders;
 using Serilog;
 using TaskManager.Application.Hubs;
@@ -28,7 +30,13 @@ namespace TaskManager
 
             builder.Host.UseSerilog();
             
-            
+            builder.Configuration.AddAzureAppConfiguration(options =>
+            {
+                var endpoint = new Uri(builder.Configuration["AppConfig:Endpoint"]);
+                options.Connect(endpoint, new DefaultAzureCredential());
+            });
+
+
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
@@ -50,7 +58,8 @@ namespace TaskManager
 
             builder.Services.AddDbContext<UserContext>(option =>
             {
-                option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+                var connectionString = builder.Configuration["DBConnectionString"];
+                option.UseNpgsql(connectionString);
             });
 
             builder.Services.AddSignalR();

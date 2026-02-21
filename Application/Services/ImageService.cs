@@ -1,3 +1,5 @@
+    using Azure.Storage.Blobs;
+    using Azure.Storage.Blobs.Models;
     using TaskManager.Application.Interfaces;
 
     namespace TaskManager.Application.Services;
@@ -5,12 +7,17 @@
     public class ImageService : IImageService
     {
         private readonly ILogger<ImageService> _logger;
+        private readonly BlobContainerClient _container;
 
-        public ImageService(ILogger<ImageService> logger)
+        public ImageService(ILogger<ImageService> logger, IConfiguration config)
         {
             _logger = logger;
+            
+            var connectionString = config["AzureBlobConnectionString"];
+            var containerName = "avatars";
+            _container =  new BlobContainerClient(connectionString, containerName);
         }
-        public async Task<string> SaveImageAsync(IFormFile file, string saveDirectory, string? oldRelativePath = null)
+        public async Task<string> SaveImageAsync(IFormFile file)
         {
             _logger.LogInformation($"Попытка сохранить изображение {file.Name}");
 
@@ -19,7 +26,7 @@
             {
                 _logger.LogError("При попытке сохранить изображение на вход методу поступил null объект");
                 
-                return oldRelativePath ?? string.Empty;
+                return null;
             }
 
             // Проверяем MIME-тип
@@ -33,100 +40,32 @@
                 throw new InvalidOperationException("Неподдерживаемый формат изображения.");
             }
 
-            // Создаём директорию, если её нет
-            if (!Directory.Exists(saveDirectory))
-                Directory.CreateDirectory(saveDirectory);
+            var blobName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var blobClient = _container.GetBlobClient(blobName);
+            
+            await using var ms = new MemoryStream();
+            await file.CopyToAsync(ms);
+            ms.Position = 0;
 
-            // Удаляем старый файл (если был)
-            if (!string.IsNullOrEmpty(oldRelativePath))
-            {
-                try
+            await blobClient.UploadAsync(
+                ms,
+                new BlobUploadOptions
                 {
-                    var absoluteOldPath = Path.Combine(
-                        Directory.GetCurrentDirectory(),
-                        "wwwroot",
-                        oldRelativePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar)
-                    );
-
-                    if (File.Exists(absoluteOldPath))
-                        File.Delete(absoluteOldPath);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError($"При попытке сохранения изображения возникло неизвестное исключение {ex.Message}");
-                }
-            }
-
-            // Генерируем новое имя файла
-            var ext = Path.GetExtension(file.FileName);
-            var fileName = $"{Guid.NewGuid()}{ext}";
-            var fullPath = Path.Combine(saveDirectory, fileName);
-
-            // Сохраняем файл
-            await using (var stream = new FileStream(fullPath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            // 🔥 Преобразуем абсолютный путь в относительный к wwwroot
-            var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            var relativePath = fullPath.Replace(wwwrootPath, string.Empty)
-                .Replace(Path.DirectorySeparatorChar, '/');
-
-            // Убираем возможный двойной слэш в начале
-            if (!relativePath.StartsWith("/"))
-                relativePath = "/" + relativePath;
-
-            return relativePath;
+                    HttpHeaders = new BlobHttpHeaders
+                    {
+                        ContentType = file.ContentType
+                    }
+                });
+            
+            return blobClient.Uri.ToString();
         }
 
-
-
-        public async Task<IFormFile> ReadImageAsync(string relativePath, string webRootPath)
+        public async Task<bool> DeleteImageAsync(string webRootPath)
         {
-            _logger.LogInformation($"Попытка считать изображение {relativePath}");
-
-            //проверка входных данных на валидность
-            if (string.IsNullOrWhiteSpace(relativePath))
-            {
-                _logger.LogError("При попытке считывания изображение на вход методу поступил null объект");
-
-                throw new ArgumentException("Путь к фото не указан.");
-            }
-
-            //собираем полный путь к фото
-            var fullPath = Path.Combine(webRootPath, relativePath.TrimStart('/')
-                .Replace('/', Path.DirectorySeparatorChar));
-
-            //проверяем существует ли файл
-            if (!File.Exists(fullPath))
-            {
-                _logger.LogError($"При попытке считать изображение на вход методу поступил путь по которому не был найден файл {relativePath}");
-                
-                throw new FileNotFoundException("Файл не найден", fullPath);
-            }
-
-            //считываем файл
-            var memoryStream = new MemoryStream(await File.ReadAllBytesAsync(fullPath));
-            var fileName = Path.GetFileName(fullPath);
-            var contentType = "image/" + Path.GetExtension(fileName).TrimStart('.');
-            
-            // заменяем все слэши для единообразия
-            string normalized = fileName.Replace('\\', '/');
-            
-            return new FormFile(memoryStream, 0, memoryStream.Length, "photo", normalized)
-            {
-                Headers = new HeaderDictionary(),
-                ContentType = contentType
-            };
-        }
-
-        public async Task<bool> DeleteImageAsync(string relativePath, string webRootPath)
-        {
-            _logger.LogInformation($"Попытка удалить изображение {relativePath}");
+            _logger.LogInformation($"Попытка удалить изображение {webRootPath}");
 
             // проверка входных данных на null
-            if (string.IsNullOrWhiteSpace(relativePath))
+            if (string.IsNullOrWhiteSpace(webRootPath))
             {
                 _logger.LogError("При попытке удаления изображение на вход методу поступил null объект");
 
@@ -134,28 +73,13 @@
             }
 
             //удаляем изображение
-            try
-            {
-                var fullPath = Path.Combine(webRootPath, relativePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
-
-                if (File.Exists(fullPath))
-                {
-                    await Task.Run(() => File.Delete(fullPath));
-                    return true;
-                }
-                else
-                {
-                    _logger.LogError($"При попытке считать изображение на вход методу поступил путь по которому не был найден файл {relativePath}");
-
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("При попытке удаления файла возникло неизвестное исключение");
-
-                throw ex;
-            }
+            var uri = new Uri(webRootPath);
+            
+            var blobName = Path.GetFileName(uri.LocalPath);
+            
+            var blobClient = _container.GetBlobClient(blobName);
+            
+            return await blobClient.DeleteIfExistsAsync();  
         }
 
     }
