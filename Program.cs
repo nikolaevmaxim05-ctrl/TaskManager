@@ -30,12 +30,7 @@ namespace TaskManager
 
             builder.Host.UseSerilog();
             
-            builder.Configuration.AddAzureAppConfiguration(options =>
-            {
-                var endpoint = new Uri(builder.Configuration["AppConfig:Endpoint"]);
-                options.Connect(endpoint, new DefaultAzureCredential());
-            });
-
+            builder.Services.AddRazorPages();
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -129,6 +124,7 @@ namespace TaskManager
             app.MapFriendEndpoints();
             app.MapNotificationEndpoints();
             app.MapChatEndpoints();
+            app.MapRazorPages();  
 
             app.MapHub<ChatHub>("/chatHub");
             app.MapHub<NotificationHub>("/notificationHub");

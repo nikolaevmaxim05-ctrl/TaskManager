@@ -1,0 +1,183 @@
+@page
+@using TaskManager.Presentation.Endpoints
+@model TaskManager.Pages.Index
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 40px 0;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #222;
+            letter-spacing: 1px;
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        p.subtitle {
+            font-size: 18px;
+            color: #555;
+            max-width: 600px;
+            line-height: 1.5;
+            margin-bottom: 40px;
+            animation: fadeIn 1.2s ease forwards;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            animation: fadeInUp 1.3s ease forwards;
+            margin-bottom: 60px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            min-width: 160px;
+        }
+
+        .btn-login { background: #6c63ff; color: white; }
+        .btn-login:hover { background: #5548e3; transform: translateY(-2px); }
+
+        .btn-register { background: #28a745; color: white; }
+        .btn-register:hover { background: #1e7e34; transform: translateY(-2px); }
+
+        .btn-work { background: #ffc107; color: #333; }
+        .btn-work:hover { background: #e0a800; transform: translateY(-2px); }
+
+        .btn-logout { background: #dc3545; color: white; }
+        .btn-logout:hover { background: #a71d2a; transform: translateY(-2px); }
+
+        .features {
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            text-align: left;
+            padding: 0 20px;
+            animation: fadeIn 1.5s ease forwards;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+
+        .feature-card h3 { margin-top: 0; color: #444; margin-bottom: 10px; }
+        .feature-card p { color: #666; font-size: 14px; line-height: 1.4; }
+
+        footer {
+            padding: 20px;
+            font-size: 14px;
+            color: #555;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            width: 100%;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(6px);
+            margin-top: auto;
+            animation: fadeIn 2s ease forwards;
+        }
+
+        @@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @@keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+
+<body>
+<main>
+    <h1>Добро пожаловать в Task Manager ✨</h1>
+    <p class="subtitle">
+        Организуй свои дела с удовольствием — удобный менеджер задач, который помогает доводить всё до конца.
+    </p>
+
+    <div class="button-group" id="auth-buttons">
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <button class="btn btn-work" onclick="window.location.href='/work'">К задачам</button>
+            <button class="btn btn-logout" asp-page="/logout">Выйти</button>
+            }
+            else
+            {
+            <button class="btn btn-login" asp-page="/login">Войти</button>
+            <button class="btn btn-register" asp-page="/signin">Регистрация</button>
+            }
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <h3>📅 Умный календарь</h3>
+            <p>Следи за дедлайнами и получай наглядное представление о сроках выполнения задач.</p>
+        </div>
+        <div class="feature-card">
+            <h3>⚡ Быстрая навигация</h3>
+            <p>Мгновенный доступ ко всем задачам без перезагрузки страниц и ожиданий.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🔒 Безопасность данных</h3>
+            <p>Вся информация хранится в твоём профиле и не передаётся третьим лицам.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🌙 Современный дизайн</h3>
+            <p>Интерфейс, который приятно использовать каждый день — минимализм и комфорт.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🧠 Удобное редактирование</h3>
+            <p>Измени задачу в пару кликов: обнови описание, дату дедлайна или статус выполнения.</p>
+        </div>
+        <div class="feature-card">
+            <h3>📊 Прогресс и мотивация</h3>
+            <p>Видь свой успех — отслеживай выполненные задачи и достигай новых целей.</p>
+        </div>
+    </div>
+</main>
+
+<footer>© 2025 Task Manager — планируй с умом 💡</footer>
+</body>
+</html>
+

@@ -17,3 +17,11 @@ build_property.SupportLocalizedComponentNames =
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = C:\Work\TaskManager\TaskManager
 build_property._RazorSourceGeneratorDebug = 
+
+[C:/Work/TaskManager/TaskManager/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Work/TaskManager/TaskManager/Pages/LogInPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nSW5QYWdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
