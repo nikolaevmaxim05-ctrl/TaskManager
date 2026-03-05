@@ -64,7 +64,7 @@ async function loadUser() {
         const user = await res.json();
         document.getElementById("nickname").value = user.nickName || "";
         document.getElementById("email").value = user.eMail || "";
-        document.getElementById("avatarPreview").src = user.avatarPath || "/photo/ava/default-avatar.jpg";
+        document.getElementById("avatarPreview").src = user.avatarPath || "/images/ava/default-avatar.jpg";
     } catch {
         console.error("Не удалось загрузить данные пользователя");
     }

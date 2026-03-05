@@ -32,8 +32,6 @@
 
   <ItemGroup>
     <Folder Include="TaskManager.Tests\UnitTests\" />
-    <Folder Include="wwwroot\photo\notes\" />
-    <Folder Include="wwwroot\photo\notes\66370b59-e61b-4476-9282-b1d2e24cd731\" />
   </ItemGroup>
 
   <ItemGroup>

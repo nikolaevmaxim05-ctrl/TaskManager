@@ -78,7 +78,7 @@ async function getCurrentUserId() {
 
 async function initProfileButton() {
     const profileIcon = document.getElementById("profileIcon");
-
+    alert("123");
     try {
         const res = await fetch("/api/user/me");
         if (!res.ok) throw new Error("Не удалось получить id пользователя");
@@ -88,8 +88,8 @@ async function initProfileButton() {
         const userRes = await fetch(`/api/user/profile/${userId}`);
         if (!userRes.ok) throw new Error("Ошибка загрузки профиля");
         const user = await userRes.json();
-
-        const avatar = user.avatarPath || "/photo/ava/default-avatar.jpg";
+        
+        const avatar = user.avatarPath || "/images/ava/default-avatar.jpg";
 
         // Заменяем иконку 👤 на реальную аватарку
         profileIcon.style.backgroundColor = "transparent";
@@ -104,6 +104,7 @@ async function initProfileButton() {
         profileIcon.onclick = () => alert("Ошибка: не удалось загрузить аватар пользователя");
     }
 }
+
 
 
 initProfileButton();

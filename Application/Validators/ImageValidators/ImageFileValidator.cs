@@ -11,8 +11,9 @@ public class ImageFileValidator : AbstractValidator<IFormFile>
             .Must(type => type == "image/jpeg" ||
                           type == "image/png" ||
                           type == "image/webp" ||
-                          type == "image/jpg")
-            .WithMessage("Допустимые форматы изображений: JPEG, PNG, WEBP.");
+                          type == "image/jpg" ||
+                          type == "image/gif")
+            .WithMessage("Допустимые форматы изображений: JPEG, PNG, WEBP, GIF.");
 
         // Проверяем размер
         RuleFor(f => f.Length)

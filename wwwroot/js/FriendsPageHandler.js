@@ -22,7 +22,7 @@ async function initProfileButton() {
         if (!userRes.ok) throw new Error("Ошибка загрузки профиля");
         const user = await userRes.json();
 
-        const avatar = user.avatarPath || "/photo/ava/default-avatar.jpg";
+        const avatar = user.avatarPath || "/images/ava/default-avatar.jpg";
 
         // Заменяем иконку 👤 на реальную аватарку
         profileIcon.style.backgroundColor = "transparent";
@@ -70,7 +70,7 @@ async function loadFriends() {
             avatar.className = "user-avatar";
             avatar.src = friend.avatarPath
                 ? friend.avatarPath.replaceAll("\\", "/")
-                : "/photo/ava/default-avatar.jpg";
+                : "/images/ava/default-avatar.jpg";
 
             const name = document.createElement("div");
             name.className = "user-name";

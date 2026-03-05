@@ -6,13 +6,13 @@ namespace TaskManager.TaskManager.Tests.Application.Services;
 
 public class ImageServiceTests
 {
-    private readonly Mock<ILogger<ImageService>> _logger;
-    private readonly ImageService _service;
+    private readonly Mock<ILogger<AzureImageService>> _logger;
+    private readonly AzureImageService _service;
 
     public ImageServiceTests(IConfiguration configuration)
     {
-        _logger = new Mock<ILogger<ImageService>>();
-        _service = new ImageService(_logger.Object, configuration);
+        _logger = new Mock<ILogger<AzureImageService>>();
+        _service = new AzureImageService(_logger.Object, configuration);
     }
 
     private IFormFile CreateFormFile(string fileName, string contentType, string content = "fake image data")

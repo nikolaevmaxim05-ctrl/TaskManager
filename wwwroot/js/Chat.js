@@ -79,7 +79,7 @@ async function initProfileButton() {
         const userRes = await fetch(`/api/user/profile/${userId}`, { credentials: "include" });
         if (!userRes.ok) throw new Error("Не удалось получить профиль пользователя");
         const user = await userRes.json();
-        const avatar = user.avatarPath || "/photo/ava/default-avatar.jpg";
+        const avatar = user.avatarPath || "/images/ava/default-avatar.jpg";
 
         profileIcon.style.backgroundImage = `url('${avatar}')`;
         profileIcon.textContent = "";

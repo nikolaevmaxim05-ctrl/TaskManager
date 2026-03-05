@@ -4,12 +4,12 @@
 
     namespace TaskManager.Application.Services;
 
-    public class ImageService : IImageService
+    public class AzureImageService : IImageService
     {
-        private readonly ILogger<ImageService> _logger;
+        private readonly ILogger<AzureImageService> _logger;
         private readonly BlobContainerClient _container;
 
-        public ImageService(ILogger<ImageService> logger, IConfiguration config)
+        public AzureImageService(ILogger<AzureImageService> logger, IConfiguration config)
         {
             _logger = logger;
             

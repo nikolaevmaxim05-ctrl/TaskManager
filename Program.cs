@@ -30,7 +30,7 @@ namespace TaskManager
 
             builder.Host.UseSerilog();
             
-            builder.Services.AddRazorPages();
+            //builder.Services.AddRazorPages();
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -53,7 +53,7 @@ namespace TaskManager
 
             builder.Services.AddDbContext<UserContext>(option =>
             {
-                var connectionString = builder.Configuration["DBConnectionString"];
+                var connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
                 option.UseNpgsql(connectionString);
             });
 
@@ -69,7 +69,7 @@ namespace TaskManager
             
             builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
             builder.Services.AddScoped<IEmailService, EmailService>();
-            builder.Services.AddScoped<IImageService, ImageService>();
+            builder.Services.AddScoped<IImageService, LocalImageService>();
             builder.Services.AddScoped<INotificationService, NotificationService>();
             builder.Services.AddScoped<IUserConfirmationService, UserConfirmationService>();
             builder.Services.AddScoped<IChatService, ChatService>();
@@ -124,7 +124,7 @@ namespace TaskManager
             app.MapFriendEndpoints();
             app.MapNotificationEndpoints();
             app.MapChatEndpoints();
-            app.MapRazorPages();  
+           // app.MapRazorPages();  
 
             app.MapHub<ChatHub>("/chatHub");
             app.MapHub<NotificationHub>("/notificationHub");

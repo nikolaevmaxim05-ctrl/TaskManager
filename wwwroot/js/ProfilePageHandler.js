@@ -13,7 +13,7 @@ async function initProfileButton() {
         if (!userRes.ok) throw new Error("Ошибка загрузки профиля");
         const user = await userRes.json();
 
-        const avatar = user.avatarPath || "/photo/ava/default-avatar.jpg";
+        const avatar = user.avatarPath || "/images/ava/default-avatar.jpg";
 
         // Заменяем иконку 👤 на реальную аватарку
         profileIcon.style.backgroundColor = "transparent";
@@ -115,7 +115,7 @@ async function renderNotification(n) {
     const senderRes = await fetch(`/api/user/profile/${n.senderId}`);
     const sender = await senderRes.json();
 
-    const avatar = sender.avatarPath || "/photo/ava/default-avatar.jpg";
+    const avatar = sender.avatarPath || "/images/ava/default-avatar.jpg";
     const nickname = sender.nickName || sender.eMail;
 
     // Основной контейнер
@@ -206,7 +206,7 @@ async function renderNotifications(notifications) {
         const senderRes = await fetch(`/api/user/profile/${n.senderId}`);
         const sender = await senderRes.json();
 
-        const avatar = sender.avatarPath || "/photo/ava/default-avatar.jpg";
+        const avatar = sender.avatarPath || "/images/ava/default-avatar.jpg";
         const nickname = sender.nickName || sender.eMail;
 
         // --- контент уведомления ---
@@ -329,7 +329,7 @@ function renderProfile(user, stats, status) {
 
     content.innerHTML = `
             ${status === 0 ? `<button class="edit-icon" onclick="window.location.href='/ProfileEditPage.html'">⚙️</button>` : ""}
-            <img src="${user.avatarPath || '/photo/ava/default-avatar.jpg'}" alt="Аватар" class="avatar" />
+            <img src="${user.avatarPath || '/images/ava/default-avatar.jpg'}" alt="Аватар" class="avatar" />
             <div class="nickname">${displayName}</div>
             ${user.nickName ? `<div class="user-email">${user.eMail}</div>` : ""}
 
